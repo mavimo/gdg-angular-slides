@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Introduction to AngularJS</title>
+
+    <meta name="description" content="AngularJS: HTML enhanced for web apps!">
+    <meta name="author" content="Marco Vito Moscaritolo <marco@agavee.com>">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="components/reveal.js/css/reveal.min.css">
+    <link rel="stylesheet" href="components/reveal.js/css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="components/reveal.js/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <script src="components/angular/angular.min.js"></script>
+
+    <script src="js/demo.js"></script>
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body ng-app>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <section>
+          <h1>Introduction to</h1>
+          <img src="./imgs/angular-logo.png" width="300"/>
+          <p>HTML enhanced for web apps!</p>
+          <p>
+            <small>by <a href="http://mavimo.org">Marco Vito Moscaritolo</a> / <a href="http://twitter.com/mavimo">@mavimo</a></small>
+          </p>
+        </section>
+
+        <section>
+          <h2>&lt;!-- directive: ng-mavimo --&gt;</h2>
+          <p><code>{ { name } }</code> -> Marco Vito Moscaritolo</p>
+          <p><code>{ { role } }</code> -> Developer</p>
+          <p><code>{ { company | link } }</code> -> <a href="http://www.agavee.com">Agavee</a></p>
+          <p><code>{ { twitter | link } }</code> -> <a href="http://twitter.com/mavimo">@mavimo</a></p>
+        </section>
+
+        <section>
+          <h2>Heads Up</h2>
+          <p>Starting from template...</p>
+          <p>...adding controllers...</p>
+          <p>...and filters...</p>
+          <p>...using routing...</p>
+          <p>...manage resources...</p>
+          <p>...and fun :)</p>
+          <aside class="notes">
+
+          </aside>
+        </section>
+
+        <section>
+
+          <section>
+            <h2>Templates (directives)</h2>
+            <p>Directives are a way to teach HTML new tricks. During DOM compilation directives are matched against the HTML and executed. This allows directives to register behavior, or transform the DOM.</p>
+
+            <pre><code>
+&lt;span ng-repeat="exp"&gt;&lt;/span&gt;
+&lt;span class="ng-repeat: exp;"&gt;&lt;/span&gt;
+&lt;ng-repeat&gt;&lt;/ng-repeat&gt;
+&lt;!-- directive: ng-repeat exp --&gt;
+</code></pre>
+            <p>The directives can be placed in element names, attributes, class names, as well as comments.</p>
+          </section>
+
+          <section>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html ng-app&gt;
+  &lt;head&gt;
+    &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js" &gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div&gt;
+      &lt;input type="text" ng-model="sample" placeholder="Enter text"&gt;
+      &lt;hr&gt;
+      &lt;h1&gt;{{ sample }}!&lt;/h1&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <aside class="notes">
+              <p>Attributes to define application "container"</p>
+              <p>attribute to define model (in scope)</p>
+              <p>Using internam template engine to display data.</p>
+            </aside>
+          </section>
+          <section>
+            <p><input type="text" ng-model="sample" placeholder="Write here..."/></p>
+            <h1>{{sample}}</h1>
+          </section>
+
+          <section>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html ng-app&gt;
+  &lt;head&gt;
+    &lt;script src="js/angular.min.js" &gt;&lt;/script&gt;
+    &lt;script src="js/demo.js" &gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;ul ng-controller="getGdgList"&gt;
+      &lt;li ng-repeat="gdg in gdgs"&gt;{{ gdg.name }} have {{ gdg.members }} members&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <aside class="notes">
+              <p>Using attributes to load data</p>
+              <p>Using repeat</p>
+            </aside>
+          </section>
+
+          <section>
+            <ul ng-controller="getGdgList">
+              <li ng-repeat="gdg in gdgs">{{ gdg.name }} have {{ gdg.members }} members</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>and also</h3>
+            <ul>
+              <li>ng-show</li>
+              <li>ng-switch</li>
+              <li>ng-class</li>
+              <li>...</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Controllers</h2>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html ng-app&gt;
+  &lt;head&gt;
+    &lt;script src="js/angular.min.js" &gt;&lt;/script&gt;
+    &lt;script src="js/demo.js" &gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;ul ng-controller="getTweets"&gt;
+      &lt;li ng-repeat="tweet in tweets"&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <aside class="notes">
+              <p>Definition using ng-controller</p>
+            </aside>
+          </section>
+
+          <section>
+            <pre><code>function getTweets($scope, $http) {
+  var search = 'gdg';
+  var url = 'http://search.twitter.com/search.json?q=' + search;
+
+  $http({ method: 'GET', url: url })
+    .success(function(data, status, headers, config) {
+      $scope.tweets = data.results;
+    })
+    .error(function(data, status, headers, config) {
+      console.log('Error: fetch tweets');
+      $scope.tweets = {};
+    });
+
+  return $scope;
+}</code></pre>
+            <aside class="notes">
+              <p>$scope is the "core"</p>
+              <p>using propmises pattern</p>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Methods in controller</h3>
+            <pre><code>function getTweets($scope, $http) {
+  // ...
+
+  $scope.getMore = function () {
+    // ...
+  }
+  // ...
+  return $scope;
+}]);</code></pre>
+            <pre><code>&lt;ul ng-controller="getTweets"&gt;
+  &lt;li ng-repeat="tweet in tweets"&gt;&lt;/li&gt;
+  &lt;li ng-click="getMore()"&gt;Get more&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <aside class="notes">
+              <p>We can add action to current controller</p>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Controller in module</h3>
+            <pre><code>var gdgApp = angular.module('gdgApp', []);
+
+gdgApp.controller('getTweets', ['$scope', '$http', function($scope, $http) {
+  var search = 'gdg';
+  var url = 'http://search.twitter.com/search.json?q=' + search;
+
+  $http({ method: 'GET', url: url }).
+    success(function(data, status, headers, config) {
+      $scope.tweets = data.results;
+    }).
+    error(function(data, status, headers, config) {
+      console.log('Error: fetch tweets');
+      $scope.tweets = {};
+    });
+
+  return $scope;
+}]);</code></pre>
+            <aside class="notes">
+              <p>Different method to define a controller (like a new service)</p>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h2>Dependency Injection</h2>
+            <p>Dependency Injection (DI) is a software design pattern that deals with how code gets hold of its dependencies.</p>
+          </section>
+
+          <section>
+            <h2>Services</h2>
+            <p>Angular services are singletons that carry out specific tasks.</p>
+            <p>Eg. $http service that provides low level access to the browser's XMLHttpRequest object.</p>
+          </section>
+
+          <section>
+            <pre><code>gdgApp.controller('getTweets', ['$scope', '$http', function($scope, $http) {
+  // ...
+  return $scope;
+}]);</code></pre>
+
+            <pre><code>angular.module('gdgModuleAlarm', []).
+  factory('alarm', function($window) {
+    return {
+      alarm: function(text) {
+        $window.alert(text);
+      }
+    };
+  }
+);</code></pre>
+            <aside class="notes">
+              <p>Similar to previus defined getTweets controller.</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Injectors</h2>
+
+            <pre><code>// New injector created from the previus declared module.
+var injector = angular.injector(['gdgModuleAlarm', 'ng']);
+
+// Request any dependency from the injector
+var a = injector.get('alarm');</code></pre>
+
+            <pre><code>// We can also force injecting using
+var alarmFactory = function (my$window) {};
+alarmFactory.$inject = ['$window'];</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Filters</h2>
+            <p>Filters perform data transformation.</p>
+            <p>They follow the spirit of UNIX filters and use similar syntax | (pipe).</p>
+          </section>
+
+          <section>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html ng-app&gt;
+  &lt;head&gt;
+    &lt;script src="js/angular.min.js" &gt;&lt;/script&gt;
+    &lt;script src="js/demo.js" &gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a href="" ng-click="predicate = 'members'; reverse=!reverse"&lt;Sort&lt;/a&gt;
+    &lt;ul ng-controller="getGdgList"&gt;
+      &lt;li ng-repeat="gdg in gdgs | orderBy:predicate:reverse "&gt;{{ name | uppercase }} have {{ members }} members&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <aside class="notes">
+              <p>Filter information in output.</p>
+              <p>Sorting information.</p>
+            </aside>
+          </section>
+
+          <section>
+            <a href="" ng-click="predicate = 'members'; reverse=!reverse">Sort</a>
+            <ul ng-controller="getGdgList">
+              <li ng-repeat="gdg in gdgs | orderBy:predicate:reverse">{{ gdg.name | uppercase}} have {{ gdg.members }} members</li>
+            </ul>
+          </section>
+
+          <section>
+          <h3>Creating custom filters</h3>
+            <pre><code>angular.module('agaveeApp', [])
+  .filter('orderByVersion', function() {
+    return function(modules, version) {
+      var parseVersionString = function (str) { /* .. */ };
+      var vMinMet = function(vmin, vcurrent) { /* .. */ };
+      var result = [];
+
+      for (var i = 0; i &lt; modules.length; i++) {
+        if (vMinMet(modules[i].version_added, version)) {
+          result[result.length] = modules[i];
+        }
+      }
+
+      return result;
+    };
+});
+</code></pre>
+            <aside class="notes">
+              <p>Creating module and injecting a filter.</p>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h2>Model</h2>
+            <p>The model is the data which is merged <br>
+               with the template to produce the view.</p>
+            <img src="imgs/concepts-model.png" />
+          </section>
+
+          <section>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html ng-app&gt;
+  &lt;head&gt;
+    &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js" &gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div&gt;
+      &lt;input type="text" ng-model="sample" placeholder="Enter text"&gt;
+      &lt;hr&gt;
+      &lt;h1&gt;{{ sample }}!&lt;/h1&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <aside class="notes">
+              <p>Simple model binded to html elemen, more complex can be visible on NgModelController</p>
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h3>Configuration</h3>
+
+          <pre><code>angular.module('gdgApp', [])
+  .constant('gdg', {
+    'url' : 'http://localhost:3000',
+    'token': 'e9adf82fd1cb716548ef1d4621a5935dcf869817'
+  })
+
+  // Configure $http
+  .config(['$httpProvider', 'gdg',
+    function ($httpProvider, gdg) {
+      $httpProvider.defaults.headers.common['X-gdg-API-Key'] = gdg.token;
+    }
+  ]);</code></pre>
+
+          <aside class="notes">
+            <p>Simple model binded to html elemen, more complex can be visible on NgModelController</p>
+          </aside>
+        </section>
+
+        <section>
+          <h3>Routing</h3>
+
+          <pre><code>angular.module('gdgApp', [])
+  // Configure services
+  .config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.when('/projects', {
+      templateUrl: 'views/projects.html',
+      controller: 'ProjectsCtrl'
+    });
+
+    $routeProvider.when('/projects/:project', {
+      templateUrl: 'views/project.html',
+      controller: 'ProjectCtrl'
+    });
+
+    $routeProvider.otherwise({redirectTo: '/projects'});
+  }]);</code></pre>
+
+          <aside class="notes">
+            <p>Simple model binded to html elemen, more complex can be visible on NgModelController</p>
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h3>Resource</h3>
+            <pre><code>angular.module('resources.project', ['ngResource'])
+  .factory('Project', ['$http', '$resource', 'gdg', function ($http, gdg) {
+    return $resource(gdg.url + '/project/:projectId', {projectId:'@id'}, {
+      query  : { method : 'GET',  isArray:true},
+      create : { method : 'POST' },
+      save   : { method : 'PUT' },
+      delete : { method : 'DELETE' }
+    });
+  }]);
+
+// ...
+
+var p = new Project();
+p.name = 'GDG Milan';
+p.$save();
+</code></pre>
+            <aside class="notes">
+              <p>Require to add angularjs.resource.js</p>
+            </aside>
+          </section>
+          <section>
+            <pre><code>angular.module('resources.project', ['ngResource'])
+  .factory('Project', ['$http', 'gdg', function ($http, gdg) {
+    var Project = function (data) {
+      angular.extend(this, data);
+    };
+
+    // a static method to retrieve Project by ID
+    Project.get = function (id) {
+      return $http.get(gdg.url + '/projects/' + id).then(function (response) {
+        return new Project(response.data);
+      });
+    };
+
+    // an instance method to create a new Project
+    Project.prototype.create = function () {
+      var project = this;
+      return $http.post(gdg.url + '/projects.json', project).then(function (response) {
+        project.id = response.data.id;
+        return project;
+      });
+    };
+
+    // an instance method to pudate create a new Project
+    Project.prototype.update = function () {
+      var project = this;
+      return $http.put(gdg.url + '/projects/' + project.id + '.json', project).then(function (response) {
+        return project;
+      });
+    };
+
+    // an instance method to delete a new Proect
+    Project.prototype.delete = function () {
+      var project = this;
+      return $http.delete(gdg.url + '/projects/' + project.id + '.json').then(function (response) {
+      });
+    };
+
+    return Project;
+  }]);</code></pre>
+
+            <aside class="notes">
+              <p>Declared dependencies in module</p>
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Testing</h3>
+            <p>Karma - a test runner that fits all our needs.</p>
+            <p>Jasmine - Jasmine is a behavior-driven development framework for testing JavaScript code.</p>
+            <aside class="notes">
+              <p></p>
+            </aside>
+          </section>
+          <section>
+            <pre><code>describe('Controller: getGdgList', function () {
+
+  // load the controller's module
+  beforeEach(module('gdgApp'));
+
+  var getGdgList, scope;
+
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller) {
+    scope = {};
+    getGdgList = $controller('getGdgList', {
+      $scope: scope
+    });
+  }));
+
+  it('GDG List must display defined number of items', function () {
+    expect(scope.gdgs.length).toBe(10);
+  });
+
+  it('GDG item must have members up to 0', function () {
+    angular.forEach(scope.gdgs,function (key, gdg) {
+      expect(gdg.members).toBeGreaterThan(0);
+    }
+  });
+
+  it('GDG item must have name and members', function () {
+    angular.forEach(scope.gdgs,function (key, gdg) {
+      expect(gdg.name).toBeDefined();
+      expect(gdg.members).toBeDefined();
+    }
+  });
+});
+</code></pre>
+
+            <aside class="notes">
+              <p></p>
+            </aside>
+          </section>
+        </section>
+
+
+        <section>
+          <h1>?</h1>
+          <p>Questions time</p>
+        </section>
+
+
+        <section>
+          <p><img src="http://bergamo.talentgarden.it/wp-content/uploads/2013/04/startup-live-talent-garden-bergamo-giugno-20131.jpg" title="Startup Live Bergamo"/></p>
+        </section>
+
+
+        <section>
+          <h1>THE END</h1>
+          <h3>Marco Vito Moscaritolo / <a href="http://twitter.com/mavimo">@mavimo</a></h3>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="components/reveal.js/lib/js/head.min.js"></script>
+    <script src="components/reveal.js/js/reveal.min.js"></script>
+
+    <script>
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-25639529-1']);
+      _gaq.push(['_setDomainName', 'agavee.com']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'components/reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'components/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'components/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+  </body>
+</html>

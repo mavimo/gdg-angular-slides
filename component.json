@@ -1,0 +1,14 @@
+{
+  "name": "GDG Milan - Introduction to AngularJS",
+  "version": "0.0.1",
+  "main": "app/index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "angular": "~1.0.6",
+    "reveal.js": "d2cf21028eac378bdefe145fefa6d49841ecea1c"
+  }
+}
